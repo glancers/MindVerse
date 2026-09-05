@@ -1,0 +1,23 @@
+node_modules
+dist
+*.local
+*.log
+.DS_Store
+
+# IDE 私有配置
+.trae/
+.claude/
+.vscode/
+.idea/
+
+# Rust
+src-tauri/target
+src-tauri/gen/schemas
+server/target
+
+# 本地数据（数据库含 API Key，严禁提交）
+server/data/
+*.db
+*.db-wal
+*.db-shm
+.env

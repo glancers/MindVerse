@@ -1,0 +1,528 @@
+@import "tailwindcss";
+
+/* ===== 皮肤主题系统 =====
+ * 每套皮肤 = 一组 --mv-* CSS 变量（参考 DreamSkin「皮肤=配色氛围」思路）
+ * 切换原理：html[data-theme] 覆盖变量，所有组件只引用变量
+ * Tailwind 工具类映射：bg-mv-bg / text-mv-ink / border-mv-border ...
+ */
+@theme inline {
+  --color-mv-bg: var(--mv-bg);
+  --color-mv-rail: var(--mv-rail);
+  --color-mv-side: var(--mv-side);
+  --color-mv-rail-hover: var(--mv-rail-hover);
+  --color-mv-rail-active: var(--mv-rail-active);
+  --color-mv-panel: var(--mv-panel);
+  --color-mv-hover: var(--mv-hover);
+  --color-mv-border: var(--mv-border);
+  --color-mv-divider: var(--mv-divider);
+  --color-mv-accent: var(--mv-accent);
+  --color-mv-accent-hover: var(--mv-accent-hover);
+  --color-mv-accent-soft: var(--mv-accent-soft);
+  --color-mv-bubble-me: var(--mv-bubble-me);
+  --color-mv-bubble-me-ink: var(--mv-bubble-me-ink);
+  --color-mv-bubble-other: var(--mv-bubble-other);
+  --color-mv-bubble-other-ink: var(--mv-bubble-other-ink);
+  --color-mv-ink: var(--mv-ink);
+  --color-mv-ink-3: var(--mv-ink-3);
+  --color-mv-ink-4: var(--mv-ink-4);
+  --color-mv-ink-5: var(--mv-ink-5);
+  --color-mv-link: var(--mv-link);
+  --color-mv-link-soft: var(--mv-link-soft);
+  --color-mv-self: var(--mv-self);
+  --color-mv-danger: var(--mv-danger);
+  --color-mv-success: var(--mv-success);
+}
+
+/* 全主题统一的功能色：危险 / 成功（不随皮肤变，语义稳定） */
+:root {
+  --mv-danger: #e5484d;
+  --mv-success: #10b981;
+}
+
+/* ---- 皮肤 1：微信绿（默认） ---- */
+:root,
+[data-theme="classic"] {
+  --mv-bg: #f5f5f5;
+  --mv-rail: #ededed;
+  --mv-side: #f2f2f2;
+  --mv-rail-hover: #dedede;
+  --mv-rail-active: #d4d4d4;
+  --mv-panel: #ffffff;
+  --mv-hover: #f0f0f0;
+  --mv-border: #e7e7e7;
+  --mv-divider: rgba(0, 0, 0, 0.06);
+  --mv-accent: #07c160;
+  --mv-accent-hover: #06ad56;
+  --mv-accent-soft: #e8f7ee;
+  --mv-bubble-me: #95ec69;
+  --mv-bubble-me-ink: #111827;
+  --mv-bubble-other: #ffffff;
+  --mv-bubble-other-ink: #111827;
+  --mv-ink: #1b1d22;
+  --mv-ink-3: #666666;
+  --mv-ink-4: #83888e;
+  --mv-ink-5: #b2b2b2;
+  --mv-link: #4f6ef7;
+  --mv-link-soft: #eef1fe;
+  --mv-self: #4f6ef7;
+  --mv-logo-from: #4f6ef7;
+  --mv-logo-to: #7c3aed;
+}
+
+/* ---- 皮肤 2：墨夜（深色） ---- */
+[data-theme="midnight"] {
+  --mv-bg: #1c1f24;
+  --mv-rail: #15171b;
+  --mv-side: #191c21;
+  --mv-rail-hover: #23262c;
+  --mv-rail-active: #2b2f36;
+  --mv-panel: #22252b;
+  --mv-hover: #2a2e35;
+  --mv-border: #33373f;
+  --mv-divider: rgba(255, 255, 255, 0.08);
+  --mv-accent: #31c07a;
+  --mv-accent-hover: #3ad489;
+  --mv-accent-soft: rgba(49, 192, 122, 0.16);
+  --mv-bubble-me: #95ec69;
+  --mv-bubble-me-ink: #10241a;
+  --mv-bubble-other: #2a2d33;
+  --mv-bubble-other-ink: #e4e7ea;
+  --mv-ink: #e6e8eb;
+  --mv-ink-3: #a8adb5;
+  --mv-ink-4: #7e838b;
+  --mv-ink-5: #55595f;
+  --mv-link: #6e8bfa;
+  --mv-link-soft: rgba(110, 139, 250, 0.14);
+  --mv-self: #5b7cfa;
+  --mv-logo-from: #5b7cfa;
+  --mv-logo-to: #8b5cf6;
+}
+
+/* ---- 皮肤 3：蓝色幻想（深海蓝，参考 dsh-web Blue Fantasy） ---- */
+[data-theme="bluefantasy"] {
+  --mv-bg: #0e1830;
+  --mv-rail: #0a1226;
+  --mv-side: #0c152b;
+  --mv-rail-hover: #182442;
+  --mv-rail-active: #1f2d50;
+  --mv-panel: #141f3a;
+  --mv-hover: #1b2846;
+  --mv-border: #273659;
+  --mv-divider: rgba(255, 255, 255, 0.08);
+  --mv-accent: #4c8dff;
+  --mv-accent-hover: #6ba1ff;
+  --mv-accent-soft: rgba(76, 141, 255, 0.16);
+  --mv-bubble-me: #3b6fd4;
+  --mv-bubble-me-ink: #ffffff;
+  --mv-bubble-other: #1b2947;
+  --mv-bubble-other-ink: #e3eaf8;
+  --mv-ink: #e8eefa;
+  --mv-ink-3: #9fb0d0;
+  --mv-ink-4: #6f82a9;
+  --mv-ink-5: #4d5f85;
+  --mv-link: #4c8dff;
+  --mv-link-soft: rgba(76, 141, 255, 0.15);
+  --mv-self: #4c8dff;
+  --mv-logo-from: #4c8dff;
+  --mv-logo-to: #8a7cff;
+}
+
+/* ---- 皮肤 4：樱粉 ---- */
+[data-theme="sakura"] {
+  --mv-bg: #faf2f4;
+  --mv-rail: #f5e6eb;
+  --mv-rail-hover: #edd9e0;
+  --mv-rail-active: #e5ced8;
+  --mv-panel: #ffffff;
+  --mv-hover: #f7ebef;
+  --mv-border: #eedde4;
+  --mv-divider: rgba(0, 0, 0, 0.05);
+  --mv-accent: #e46a8c;
+  --mv-accent-hover: #d2557a;
+  --mv-accent-soft: #fbe4eb;
+  --mv-bubble-me: #f6c1d2;
+  --mv-bubble-me-ink: #4a2733;
+  --mv-bubble-other: #ffffff;
+  --mv-bubble-other-ink: #3f2a32;
+  --mv-ink: #453039;
+  --mv-ink-3: #8c737d;
+  --mv-ink-4: #a78f99;
+  --mv-ink-5: #cbb6be;
+  --mv-link: #d4547c;
+  --mv-link-soft: #fae7ee;
+  --mv-self: #e46a8c;
+  --mv-logo-from: #e88ca6;
+  --mv-logo-to: #c86dd7;
+}
+
+/* ---- 皮肤 5：哥特虚空（暗紫，参考 Codex-Dream-Skin Gothic Void）----
+ * 面板为半透明（rgba），可配合任意背景壁纸（DreamSkin 思路：壁纸铺满整窗，UI 半透明浮在其上）*/
+[data-theme="gothic"] {
+  --mv-bg: rgba(20, 16, 27, 0.6);
+  --mv-rail: rgba(14, 11, 20, 0.72);
+  --mv-rail-hover: rgba(29, 23, 40, 0.78);
+  --mv-rail-active: rgba(38, 31, 53, 0.82);
+  --mv-panel: rgba(26, 21, 36, 0.88);
+  --mv-hover: rgba(35, 28, 49, 0.72);
+  --mv-border: rgba(45, 37, 64, 0.85);
+  --mv-divider: rgba(255, 255, 255, 0.07);
+  --mv-accent: #a78bfa;
+  --mv-accent-hover: #bba5fb;
+  --mv-accent-soft: rgba(167, 139, 250, 0.15);
+  --mv-bubble-me: #4e3b85;
+  --mv-bubble-me-ink: #ede9fe;
+  --mv-bubble-other: rgba(33, 26, 46, 0.92);
+  --mv-bubble-other-ink: #ddd5ec;
+  --mv-ink: #e2dbef;
+  --mv-ink-3: #a79dc2;
+  --mv-ink-4: #7c7196;
+  --mv-ink-5: #574e6e;
+  --mv-link: #a78bfa;
+  --mv-link-soft: rgba(167, 139, 250, 0.14);
+  --mv-self: #8b5cf6;
+  --mv-logo-from: #6d28d9;
+  --mv-logo-to: #312e81;
+}
+
+/* ---- 皮肤 6：宣纸（米白纸感 + 朱砂） ---- */
+[data-theme="paper"] {
+  --mv-bg: #f2ede2;
+  --mv-rail: #e9e2d2;
+  --mv-side: #eee7da;
+  --mv-rail-hover: #dfd6c2;
+  --mv-rail-active: #d6cbb4;
+  --mv-panel: #fbf8f0;
+  --mv-hover: #f1ebdd;
+  --mv-border: #dcd2be;
+  --mv-divider: rgba(0, 0, 0, 0.06);
+  --mv-accent: #b04a3a;
+  --mv-accent-hover: #9c3e30;
+  --mv-accent-soft: rgba(176, 74, 58, 0.1);
+  --mv-bubble-me: #dfd3b4;
+  --mv-bubble-me-ink: #3a2f20;
+  --mv-bubble-other: #fbf8f0;
+  --mv-bubble-other-ink: #3a2f20;
+  --mv-ink: #362b1c;
+  --mv-ink-3: #6e5f49;
+  --mv-ink-4: #8e7f68;
+  --mv-ink-5: #b4a58c;
+  --mv-link: #8a6f4d;
+  --mv-link-soft: rgba(138, 111, 77, 0.12);
+  --mv-self: #8a6f4d;
+  --mv-logo-from: #a08a5f;
+  --mv-logo-to: #6e5f49;
+}
+
+/* ===== 壁纸模式（html.has-bg）：大面板块改半透明，壁纸从各层透出 =====
+ * 变量由 themeStore 按「主题记忆的背景选择」注入 --mv-bg-image / --mv-bg-mask */
+html.has-bg[data-theme="classic"] {
+  --mv-bg: rgba(245, 245, 245, 0.62);
+  --mv-rail: rgba(237, 237, 237, 0.72);
+  --mv-side: rgba(242, 242, 242, 0.62);
+  --mv-panel: rgba(255, 255, 255, 0.8);
+  --mv-bubble-other: rgba(255, 255, 255, 0.86);
+}
+html.has-bg[data-theme="midnight"] {
+  --mv-bg: rgba(28, 31, 36, 0.6);
+  --mv-rail: rgba(21, 23, 27, 0.72);
+  --mv-side: rgba(25, 28, 33, 0.6);
+  --mv-panel: rgba(34, 37, 43, 0.78);
+  --mv-bubble-other: rgba(42, 45, 51, 0.85);
+}
+html.has-bg[data-theme="bluefantasy"] {
+  --mv-bg: rgba(14, 24, 48, 0.6);
+  --mv-rail: rgba(10, 18, 38, 0.72);
+  --mv-side: rgba(12, 21, 43, 0.6);
+  --mv-panel: rgba(20, 31, 58, 0.78);
+  --mv-bubble-other: rgba(27, 41, 71, 0.85);
+}
+html.has-bg[data-theme="sakura"] {
+  --mv-bg: rgba(250, 242, 244, 0.62);
+  --mv-rail: rgba(245, 230, 235, 0.72);
+  --mv-side: rgba(247, 236, 240, 0.62);
+  --mv-panel: rgba(255, 255, 255, 0.8);
+  --mv-bubble-other: rgba(255, 255, 255, 0.86);
+}
+html.has-bg[data-theme="gothic"] {
+  --mv-bg: rgba(20, 16, 27, 0.55);
+  --mv-rail: rgba(14, 11, 20, 0.68);
+  --mv-side: rgba(17, 13, 24, 0.6);
+  --mv-panel: rgba(26, 21, 36, 0.82);
+  --mv-bubble-other: rgba(33, 26, 46, 0.88);
+}
+html.has-bg[data-theme="paper"] {
+  --mv-bg: rgba(242, 237, 226, 0.6);
+  --mv-rail: rgba(233, 226, 210, 0.72);
+  --mv-side: rgba(238, 231, 218, 0.6);
+  --mv-panel: rgba(251, 248, 240, 0.8);
+  --mv-bubble-other: rgba(251, 248, 240, 0.86);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  /* 皮肤壁纸层：无背景图的皮肤该变量为 none，等价纯色 */
+  background-image: var(--mv-bg-image, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--mv-bg);
+  color: var(--mv-ink);
+  font-family: -apple-system, "PingFang SC", "Segoe UI", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 桌面端（Tauri）：空白区域为窗口拖拽区，默认箭头而非 I-beam；
+   文本输入/可选内容显式恢复 text（桌面端 body 加 .mv-desktop 类，见 main.tsx） */
+body.mv-desktop,
+body.mv-desktop div,
+body.mv-desktop span,
+body.mv-desktop p,
+body.mv-desktop h1,
+body.mv-desktop h2,
+body.mv-desktop h3 {
+  cursor: default;
+}
+body.mv-desktop input,
+body.mv-desktop textarea,
+body.mv-desktop [contenteditable='true'] {
+  cursor: text;
+}
+body.mv-desktop [data-tauri-drag-region] {
+  cursor: default;
+}
+
+/* 壁纸蒙层：压暗壁纸保证前景可读（铺在壁纸之上、内容之下） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--mv-bg-mask, none);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 切换皮肤时全局色彩平滑过渡（仅动画期间挂载） */
+html.theme-anim,
+html.theme-anim *,
+html.theme-anim *::before,
+html.theme-anim *::after {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    fill 0.3s ease,
+    stroke 0.3s ease !important;
+}
+
+/* 文本选区跟随主题强调色 */
+::selection {
+  background: color-mix(in srgb, var(--mv-accent) 25%, transparent);
+}
+
+/* 细滚动条（跟随主题） */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--mv-ink) 18%, transparent);
+  border-radius: 3px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--mv-ink) 30%, transparent);
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.msg-enter {
+  animation: msg-in 0.22s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.toast-enter {
+  animation: toast-in 0.22s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.dialog-enter {
+  animation: dialog-in 0.2s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+/* 微信风格气泡小尾巴 - 更细致的三角形；颜色/阴影跟随皮肤 */
+.bubble-me,
+.bubble-other {
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.05);
+}
+.bubble-me::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 6px;
+  border-color: transparent transparent transparent var(--mv-bubble-me);
+}
+.bubble-other::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 6px 5px 0;
+  border-color: transparent var(--mv-bubble-other) transparent transparent;
+}
+
+/* ===== Markdown 正文（AI 消息渲染）=====
+ * 颜色一律走 --mv-* 主题变量，随皮肤切换 */
+.md-body > *:first-child {
+  margin-top: 0;
+}
+.md-body > *:last-child {
+  margin-bottom: 0;
+}
+.md-body p {
+  margin: 0.5em 0;
+}
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4 {
+  margin: 0.9em 0 0.4em;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.md-body h1 {
+  font-size: 1.25em;
+}
+.md-body h2 {
+  font-size: 1.18em;
+}
+.md-body h3 {
+  font-size: 1.1em;
+}
+.md-body h4 {
+  font-size: 1em;
+}
+.md-body ul,
+.md-body ol {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+}
+.md-body ul {
+  list-style: disc;
+}
+.md-body ol {
+  list-style: decimal;
+}
+.md-body li {
+  margin: 0.2em 0;
+}
+.md-body li > ul,
+.md-body li > ol {
+  margin: 0.2em 0;
+}
+.md-body blockquote {
+  margin: 0.5em 0;
+  padding: 0.1em 0 0.1em 0.8em;
+  border-left: 3px solid var(--mv-border);
+  color: var(--mv-ink-3);
+}
+.md-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+}
+.md-body :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--mv-ink) 8%, transparent);
+}
+.md-body pre {
+  margin: 0.5em 0;
+  padding: 0.7em 0.9em;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: color-mix(in srgb, var(--mv-ink) 7%, transparent);
+  border: 1px solid var(--mv-divider);
+}
+.md-body pre code {
+  padding: 0;
+  background: none;
+  white-space: pre;
+}
+.md-body table {
+  margin: 0.6em 0;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.95em;
+}
+.md-body th,
+.md-body td {
+  padding: 0.35em 0.7em;
+  border: 1px solid var(--mv-border);
+  text-align: left;
+}
+.md-body th {
+  background: color-mix(in srgb, var(--mv-ink) 6%, transparent);
+  font-weight: 600;
+}
+.md-body a {
+  color: var(--mv-link);
+  text-decoration: none;
+}
+.md-body a:hover {
+  text-decoration: underline;
+}
+.md-body hr {
+  margin: 0.8em 0;
+  border: none;
+  border-top: 1px solid var(--mv-divider);
+}
+.md-body img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
