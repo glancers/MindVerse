@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindVerse — Many minds. One you.</title>
+<meta name="description" content="MindVerse 是一个 AI 人格聊天室：每个智能体拥有独立人格，单聊深谈，群聊碰撞观点。">
+<style>
+  :root {
+    --bg: #0b0d14;
+    --bg-soft: #11141f;
+    --card: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text: #e6e8f0;
+    --text-2: #9aa0b4;
+    --text-3: #6b7186;
+    --accent: #8b7cf6;
+    --accent-2: #5eead4;
+    --accent-grad: linear-gradient(120deg, #8b7cf6 0%, #6aa8ff 50%, #5eead4 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 星点背景 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.5) 50%, transparent 51%),
+      radial-gradient(1px 1px at 38% 8%,  rgba(255,255,255,.35) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 66% 18%, rgba(255,255,255,.45) 50%, transparent 51%),
+      radial-gradient(1px 1px at 84% 32%, rgba(255,255,255,.3) 50%, transparent 51%),
+      radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,.25) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 68%, rgba(255,255,255,.3) 50%, transparent 51%),
+      radial-gradient(1px 1px at 52% 82%, rgba(255,255,255,.3) 50%, transparent 51%),
+      radial-gradient(1px 1px at 8% 78%,  rgba(255,255,255,.25) 50%, transparent 51%),
+      radial-gradient(600px 400px at 50% -10%, rgba(139,124,246,.14), transparent 70%),
+      radial-gradient(500px 350px at 85% 110%, rgba(94,234,212,.07), transparent 70%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* 导航 */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(11, 13, 20, .72);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: .3px; }
+  .brand svg { display: block; }
+  .nav-links { display: flex; align-items: center; gap: 20px; font-size: 13px; color: var(--text-2); }
+  .nav-links a:hover { color: var(--text); }
+  .gh-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 7px; font-size: 13px; font-weight: 500;
+    color: var(--text); background: var(--card); border: 1px solid var(--card-border);
+    transition: border-color .2s, background .2s;
+  }
+  .gh-btn:hover { border-color: rgba(139,124,246,.5); background: rgba(139,124,246,.1); }
+
+  /* Hero */
+  .hero { padding: 84px 0 64px; text-align: center; }
+  .hero-tag {
+    display: inline-block; padding: 3px 12px; margin-bottom: 18px;
+    font-size: 12px; color: var(--accent-2); letter-spacing: .5px;
+    border: 1px solid rgba(94,234,212,.25); border-radius: 99px;
+    background: rgba(94,234,212,.06);
+  }
+  .hero h1 {
+    font-size: 34px; font-weight: 700; letter-spacing: .5px; line-height: 1.3;
+    background: var(--accent-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .slogan { margin-top: 10px; font-size: 14px; color: var(--text-2); letter-spacing: 2px; }
+  .hero .desc { max-width: 560px; margin: 20px auto 0; font-size: 14px; color: var(--text-2); }
+  .hero .desc strong { color: var(--text); font-weight: 500; }
+  .hero-actions { margin-top: 28px; display: flex; gap: 12px; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    transition: transform .15s, box-shadow .2s, border-color .2s, background .2s;
+  }
+  .btn-primary { color: #0d0f16; background: var(--accent-grad); box-shadow: 0 4px 24px rgba(139,124,246,.3); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(139,124,246,.45); }
+  .btn-ghost { color: var(--text); background: var(--card); border: 1px solid var(--card-border); }
+  .btn-ghost:hover { border-color: rgba(139,124,246,.5); }
+
+  /* 分区 */
+  section { padding: 56px 0; }
+  .sec-head { text-align: center; margin-bottom: 32px; }
+  .sec-head .en { font-size: 11px; letter-spacing: 3px; color: var(--accent-2); text-transform: uppercase; }
+  .sec-head h2 { margin-top: 6px; font-size: 20px; font-weight: 600; }
+  .sec-head p { margin-top: 8px; font-size: 13px; color: var(--text-3); }
+
+  .grid { display: grid; gap: 14px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 720px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    padding: 20px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--card-border);
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: rgba(139,124,246,.35); transform: translateY(-2px); }
+  .card .icon {
+    width: 34px; height: 34px; border-radius: 9px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(139,124,246,.12); color: var(--accent);
+  }
+  .card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--text-2); }
+
+  /* 人格 chips */
+  .personas { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 99px; font-size: 13px;
+    background: var(--card); border: 1px solid var(--card-border);
+    transition: border-color .2s, background .2s;
+  }
+  .chip:hover { border-color: rgba(94,234,212,.4); background: rgba(94,234,212,.06); }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .chip small { color: var(--text-3); font-size: 12px; }
+
+  /* 快速开始 */
+  .term {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--card-border); background: #0d1019;
+  }
+  .term-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 14px; background: rgba(255,255,255,.03);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .term-bar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .term-bar i:nth-child(1) { background: #f87171; }
+  .term-bar i:nth-child(2) { background: #fbbf24; }
+  .term-bar i:nth-child(3) { background: #34d399; }
+  .term-bar span { margin-left: 8px; font-size: 11px; color: var(--text-3); letter-spacing: .5px; }
+  .term pre {
+    padding: 18px 20px; overflow-x: auto;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.9; color: #c9d1e0;
+  }
+  .term .c { color: #5b6274; }
+  .term .p { color: var(--accent-2); }
+
+  /* 技术栈 */
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .stack span {
+    padding: 6px 14px; border-radius: 8px; font-size: 12.5px; color: var(--text-2);
+    background: var(--card); border: 1px solid var(--card-border);
+  }
+  .stack span b { color: var(--text); font-weight: 500; }
+
+  /* 结尾 CTA */
+  .cta { text-align: center; padding: 64px 0 72px; }
+  .cta h2 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+  .cta p { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+
+  footer {
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding: 24px 0; text-align: center;
+    font-size: 12px; color: var(--text-3);
+  }
+  footer a { color: var(--text-2); }
+  footer a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3.2" fill="url(#lg)"/>
+        <ellipse cx="12" cy="12" rx="9.5" ry="4" stroke="url(#lg)" stroke-width="1.2" transform="rotate(-20 12 12)"/>
+        <ellipse cx="12" cy="12" rx="9.5" ry="4" stroke="url(#lg)" stroke-width="1.2" opacity=".5" transform="rotate(35 12 12)"/>
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#8b7cf6"/><stop offset="1" stop-color="#5eead4"/></linearGradient></defs>
+      </svg>
+      MindVerse
+    </a>
+    <div class="nav-links">
+      <a href="#scenes">场景</a>
+      <a href="#features">特性</a>
+      <a href="#start">快速开始</a>
+      <a class="gh-btn" href="https://github.com/glancers/MindVerse" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="hero-tag">开源 · 本地优先 · AI 人格聊天室</span>
+  <h1>MindVerse</h1>
+  <p class="slogan">MANY MINDS. ONE YOU.</p>
+  <p class="desc">
+    把脑子里的几个声音请到一个房间里。每个智能体拥有<strong>独立人格</strong>——
+    单聊深谈，或把多个人格拉进一个群，@谁谁回应，也可以点「让大家聊聊」，看他们自动交锋观点。
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="https://github.com/glancers/MindVerse" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      在 GitHub 查看
+    </a>
+    <a class="btn btn-ghost" href="#start">快速开始</a>
+  </div>
+</header>
+
+<section id="scenes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">Scenarios</div>
+      <h2>三个核心场景</h2>
+      <p>摆脱一个人想破头，获得多元视角</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="6"/></svg></div>
+        <h3>决策</h3>
+        <p>面对一个选择，把不同视角的人格拉进群里讨论，让理性派、反对派、乐观派各自表态。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+        <h3>头脑风暴</h3>
+        <p>面对一个创意问题，让不同人格各抒己见，突破单线思维，激发意想不到的新想法。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+        <h3>自我觉察</h3>
+        <p>和理性的我、感性的我、未来的我对话，在交锋中看见内心真实的声音。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">Features</div>
+      <h2>核心特性</h2>
+      <p>微信式交互，零学习成本</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>预设人格库</h3>
+        <p>内置毒舌评论家、理性分析师、魔鬼代言人等 8+ 思维风格，开箱即聊。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>自定义人格</h3>
+        <p>名字、头像、性格标签、System Prompt 自由创建，支持分组管理与模型绑定。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>混合群聊机制</h3>
+        <p>@点名精准回应；「让大家聊聊」自动接龙数轮，你旁听或随时插话。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
+        <h3>多 Provider</h3>
+        <p>火山方舟 / OpenAI / Anthropic / 任意 OpenAI 兼容服务，不同人格可用不同模型。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <h3>附件支持</h3>
+        <p>图片多模态理解、文本文件上传与粘贴，消息内预览、点击全屏查看。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>本地数据主权</h3>
+        <p>IndexedDB / SQLite 持久化，一键导出导入备份，API Key 不离开本机。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">Personas</div>
+      <h2>认识几位常驻人格</h2>
+      <p>预设人格可编辑后另存为自己的版本</p>
+    </div>
+    <div class="personas">
+      <span class="chip"><i class="dot" style="background:#f87171"></i>毒舌评论家 <small>找茬一针见血</small></span>
+      <span class="chip"><i class="dot" style="background:#6aa8ff"></i>理性分析师 <small>数据与逻辑驱动</small></span>
+      <span class="chip"><i class="dot" style="background:#fbbf24"></i>乐天派 <small>永远发现机会</small></span>
+      <span class="chip"><i class="dot" style="background:#c084fc"></i>魔鬼代言人 <small>专反驳主流意见</small></span>
+      <span class="chip"><i class="dot" style="background:#5eead4"></i>用户代言人 <small>站在消费者视角</small></span>
+      <span class="chip"><i class="dot" style="background:#fb923c"></i>老板视角 <small>关心成本与 ROI</small></span>
+      <span class="chip"><i class="dot" style="background:#f472b6"></i>创意发散者 <small>天马行空脑洞</small></span>
+      <span class="chip"><i class="dot" style="background:#34d399"></i>冷静总结者 <small>归纳共识与分歧</small></span>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">Quick Start</div>
+      <h2>三种形态，任选其一</h2>
+      <p>纯前端本地版 · Rust 服务端 · Tauri 桌面端</p>
+    </div>
+    <div class="term">
+      <div class="term-bar"><i></i><i></i><i></i><span>terminal</span></div>
+      <pre><span class="c"># 形态一：纯前端（浏览器直连 LLM，数据存 IndexedDB）</span>
+<span class="p">$</span> pnpm install
+<span class="p">$</span> pnpm dev
+
+<span class="c"># 形态二：Rust 服务端（多用户、LLM 服务端代理，127.0.0.1:8787）</span>
+<span class="p">$</span> cd server && cargo run
+
+<span class="c"># 形态三：Tauri 桌面端（单进程内嵌 server）</span>
+<span class="p">$</span> pnpm tauri dev</pre>
+    </div>
+    <p style="text-align:center; margin-top:14px; font-size:13px; color:var(--text-3);">
+      启动后：设置里添加模型服务（如火山方舟 OpenAI 兼容端点 + API Key），从人格库挑几个人格，开聊。
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">Tech Stack</div>
+      <h2>技术栈</h2>
+    </div>
+    <div class="stack">
+      <span><b>前端</b>&ensp;React 18 · TypeScript · Vite · Tailwind 4 · Zustand · Dexie</span>
+      <span><b>服务端</b>&ensp;Rust · axum · SQLx/SQLite · argon2 · SSE</span>
+      <span><b>桌面端</b>&ensp;Tauri 2（单二进制）</span>
+    </div>
+  </div>
+</section>
+
+<div class="cta wrap">
+  <h2>每个人的内在都是一个完整的小宇宙</h2>
+  <p>MindVerse = Mind（心智）+ Verse（宇宙）。开源、本地优先、数据自主。</p>
+  <a class="btn btn-primary" href="https://github.com/glancers/MindVerse" target="_blank" rel="noopener">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    Star on GitHub
+  </a>
+</div>
+
+<footer>
+  <div class="wrap">
+    MindVerse — Many minds. One you. &ensp;·&ensp;
+    <a href="https://github.com/glancers/MindVerse" target="_blank" rel="noopener">github.com/glancers/MindVerse</a>
+  </div>
+</footer>
+
+</body>
+</html>
