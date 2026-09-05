@@ -70,7 +70,20 @@
   .gh-btn:hover { border-color: rgba(139,124,246,.5); background: rgba(139,124,246,.1); }
 
   /* Hero */
-  .hero { padding: 84px 0 64px; text-align: center; }
+  .hero { padding: 52px 0 64px; text-align: center; }
+  .hero-mascot {
+    width: 210px; height: 210px; object-fit: contain; display: block;
+    margin: 0 auto 20px;
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 14px 44px rgba(139,124,246,.4));
+  }
+  @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+  .card-img { width: 100%; height: 108px; object-fit: contain; margin-bottom: 14px; }
+  .chip img.avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    object-fit: contain; background: rgba(255,255,255,.06);
+    border: 1px solid var(--card-border);
+  }
   .hero-tag {
     display: inline-block; padding: 3px 12px; margin-bottom: 18px;
     font-size: 12px; color: var(--accent-2); letter-spacing: .5px;
@@ -205,6 +218,7 @@
 </nav>
 
 <header class="hero wrap" id="top">
+  <img class="hero-mascot" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=cute%20cartoon%20mascot%20of%20a%20little%20purple%20planet%20character%20with%20a%20happy%20face%2C%20orbiting%20glowing%20stars%20and%20tiny%20planets%20around%20it%2C%20flat%20vector%20illustration%2C%20gradient%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20dreamy%20cosmic%20atmosphere%2C%20clean%20minimal%2C%20high%20quality&image_size=square_hd" alt="MindVerse 小星球吉祥物">
   <span class="hero-tag">开源 · 本地优先 · AI 人格聊天室</span>
   <h1>MindVerse</h1>
   <p class="slogan">MANY MINDS. ONE YOU.</p>
@@ -230,17 +244,17 @@
     </div>
     <div class="grid grid-3">
       <div class="card">
-        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="6"/></svg></div>
+        <img class="card-img" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20illustration%20of%20a%20cute%20character%20standing%20at%20a%20glowing%20crossroads%20with%20signposts%20pointing%20different%20directions%2C%20decision%20making%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="决策场景插画">
         <h3>决策</h3>
         <p>面对一个选择，把不同视角的人格拉进群里讨论，让理性派、反对派、乐观派各自表态。</p>
       </div>
       <div class="card">
-        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+        <img class="card-img" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20illustration%20of%20cute%20characters%20around%20a%20big%20glowing%20lightbulb%20with%20colorful%20idea%20sparks%20flying%20out%2C%20brainstorming%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="头脑风暴场景插画">
         <h3>头脑风暴</h3>
         <p>面对一个创意问题，让不同人格各抒己见，突破单线思维，激发意想不到的新想法。</p>
       </div>
       <div class="card">
-        <div class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+        <img class="card-img" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20illustration%20of%20a%20cute%20character%20looking%20into%20a%20magical%20mirror%20reflecting%20another%20version%20of%20itself%2C%20self%20awareness%2C%20heartwarming%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="自我觉察场景插画">
         <h3>自我觉察</h3>
         <p>和理性的我、感性的我、未来的我对话，在交锋中看见内心真实的声音。</p>
       </div>
@@ -298,14 +312,14 @@
       <p>预设人格可编辑后另存为自己的版本</p>
     </div>
     <div class="personas">
-      <span class="chip"><i class="dot" style="background:#f87171"></i>毒舌评论家 <small>找茬一针见血</small></span>
-      <span class="chip"><i class="dot" style="background:#6aa8ff"></i>理性分析师 <small>数据与逻辑驱动</small></span>
-      <span class="chip"><i class="dot" style="background:#fbbf24"></i>乐天派 <small>永远发现机会</small></span>
-      <span class="chip"><i class="dot" style="background:#c084fc"></i>魔鬼代言人 <small>专反驳主流意见</small></span>
-      <span class="chip"><i class="dot" style="background:#5eead4"></i>用户代言人 <small>站在消费者视角</small></span>
-      <span class="chip"><i class="dot" style="background:#fb923c"></i>老板视角 <small>关心成本与 ROI</small></span>
-      <span class="chip"><i class="dot" style="background:#f472b6"></i>创意发散者 <small>天马行空脑洞</small></span>
-      <span class="chip"><i class="dot" style="background:#34d399"></i>冷静总结者 <small>归纳共识与分歧</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20smirking%20fox%20critic%20wearing%20a%20monocle%2C%20sharp-tongued%20personality%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="毒舌评论家">毒舌评论家 <small>找茬一针见血</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20wise%20owl%20analyst%20wearing%20round%20glasses%20with%20floating%20charts%2C%20rational%20and%20calm%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="理性分析师">理性分析师 <small>数据与逻辑驱动</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20cheerful%20smiling%20sun%20character%20with%20sparkles%2C%20optimistic%20energy%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="乐天派">乐天派 <small>永远发现机会</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20cute%20little%20devil%20with%20tiny%20horns%20and%20a%20mischievous%20smile%2C%20devil%20advocate%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="魔鬼代言人">魔鬼代言人 <small>专反驳主流意见</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20friendly%20character%20holding%20a%20megaphone%20and%20a%20shopping%20bag%2C%20consumer%20advocate%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="用户代言人">用户代言人 <small>站在消费者视角</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20serious%20business%20cat%20in%20a%20suit%20and%20tie%2C%20boss%20perspective%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="老板视角">老板视角 <small>关心成本与 ROI</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20an%20imaginative%20character%20with%20colorful%20stars%20and%20ideas%20bursting%20from%20its%20head%2C%20creative%20thinker%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="创意发散者">创意发散者 <small>天马行空脑洞</small></span>
+      <span class="chip"><img class="avatar" loading="lazy" src="https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt=flat%20vector%20cartoon%20avatar%20sticker%20of%20a%20zen%20capybara%20meditating%20with%20a%20notebook%2C%20calm%20summarizer%2C%20purple%20and%20teal%20palette%2C%20dark%20navy%20background%2C%20clean%20minimal&image_size=square" alt="冷静总结者">冷静总结者 <small>归纳共识与分歧</small></span>
     </div>
   </div>
 </section>
